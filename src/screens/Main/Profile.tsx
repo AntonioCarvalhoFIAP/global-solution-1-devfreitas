@@ -201,6 +201,15 @@ export const Profile = () => {
   const handleUpdateProfile = async () => {
     if (!user?.id) return;
 
+    const { nome, cpf, cnh, telefone } = editData;
+    if (!nome || !cpf || !cnh || !telefone) {
+      return Alert.alert('Erro de Validação', 'Todos os campos são obrigatórios.');
+    }
+
+    if (cpf.length !== 11 || cnh.length !== 11) {
+      return Alert.alert('Erro de Validação', 'CPF e CNH devem ter 11 dígitos.');
+    }
+
     setLoading(true);
     try {
       // Se o ID foi alterado manualmente, atualiza no estado global primeiro

@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { driverService } from '../../services/driverService';
+import { setApiToken } from '../../services/api';
 import { Rocket } from 'lucide-react-native';
 import { MotiView } from 'moti';
 
@@ -56,6 +57,10 @@ export const Login = () => {
       console.log('[Login] Resposta completa da API:', JSON.stringify(response, null, 2));
       
       const token = response.token || response.jwt;
+      
+      if (token) {
+        setApiToken(token);
+      }
       
       // Tenta extrair o ID do motorista de várias formas comuns
       let driverId = response.idMotorista || 

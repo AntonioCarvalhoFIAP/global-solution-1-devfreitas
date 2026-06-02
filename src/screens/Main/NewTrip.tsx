@@ -91,7 +91,7 @@ export const NewTrip = () => {
       });
 
       Alert.alert('Sucesso', 'Nova viagem iniciada com sucesso!', [
-        { text: 'OK', onPress: () => navigation.navigate('Dashboard') }
+        { text: 'OK', onPress: () => navigation.navigate('Main', { screen: 'Dashboard' }) }
       ]);
     } catch (error: any) {
       const message = error.response?.data?.mensagem || 'Falha ao criar viagem.';

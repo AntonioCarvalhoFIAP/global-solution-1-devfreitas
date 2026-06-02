@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { driverService } from '../../services/driverService';
+import { setApiToken } from '../../services/api';
 import { Rocket, ArrowLeft } from 'lucide-react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -63,7 +64,11 @@ export const Register = () => {
         senha: senha
       };
       
-      await driverService.register(authPayload);
+      const response = await driverService.register(authPayload);
+      
+      if (response.token) {
+        setApiToken(response.token);
+      }
 
       // 2. Cria o perfil profissional (Motorista)
       // Nota: Algumas APIs exigem login prévio, mas seguindo o blueprint
