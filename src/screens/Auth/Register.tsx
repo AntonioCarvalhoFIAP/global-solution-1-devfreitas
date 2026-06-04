@@ -57,7 +57,6 @@ export const Register = () => {
 
     setLoading(true);
     try {
-      // 1. Cria as credenciais (Auth)
       const authPayload = {
         usuario: nome,
         email: email,
@@ -70,13 +69,11 @@ export const Register = () => {
         setApiToken(response.token);
       }
 
-      // 2. Cria o perfil profissional (Motorista)
-      // Nota: Algumas APIs exigem login prévio, mas seguindo o blueprint
-      // enviamos logo após o registro da conta.
       const profilePayload = {
+        idMotorista: response.id || response.idMotorista || response.user?.id,
         nome,
-        cpf,
-        cnh,
+        cpf: cpf.replace(/\D/g, ''),
+        cnh: cnh.replace(/\D/g, ''),
         telefone,
         status: 'ATIVO'
       };
@@ -124,11 +121,12 @@ export const Register = () => {
         />
 
         <Input 
-          label="Telefone"
-          placeholder="(11) 99999-9999"
+          label="Telefone (apenas números)"
+          placeholder="11999999999"
           keyboardType="phone-pad"
+          maxLength={11}
           value={formData.telefone}
-          onChangeText={(v) => setFormData({ ...formData, telefone: v })}
+          onChangeText={(v) => setFormData({ ...formData, telefone: v.replace(/\D/g, '') })}
         />
 
         <Input 
@@ -137,7 +135,7 @@ export const Register = () => {
           keyboardType="numeric"
           maxLength={11}
           value={formData.cpf}
-          onChangeText={(v) => setFormData({ ...formData, cpf: v })}
+          onChangeText={(v) => setFormData({ ...formData, cpf: v.replace(/\D/g, '') })}
         />
 
         <Input 
@@ -146,7 +144,7 @@ export const Register = () => {
           keyboardType="numeric"
           maxLength={11}
           value={formData.cnh}
-          onChangeText={(v) => setFormData({ ...formData, cnh: v })}
+          onChangeText={(v) => setFormData({ ...formData, cnh: v.replace(/\D/g, '') })}
         />
 
         <Input 
